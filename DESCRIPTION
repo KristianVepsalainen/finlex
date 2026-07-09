@@ -12,7 +12,6 @@ Description: Provides functions to retrieve and structure Finnish
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 URL: https://github.com/kristianvepsalainen/finlex
 BugReports: https://github.com/kristianvepsalainen/finlex/issues
 Depends: 
@@ -26,3 +25,4 @@ Imports:
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
