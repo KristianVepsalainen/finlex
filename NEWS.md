@@ -1,5 +1,5 @@
 # finlex 0.0.0.9000
 
-* Alustava pakettirunko luotu.
-* Ensimmäinen funktio: `flx_download_statutes()` säädösluettelon hakemiseen
-  Finlexin Avoin data -rajapinnasta.
+* Initial package skeleton created.
+* First function: `flx_download_statutes()` for retrieving the statute
+  catalogue from the Finlex Open Data API.
