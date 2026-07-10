@@ -1,6 +1,7 @@
 #' Download the catalogue of Finnish statutes
 #'
-#' Retrieves the list of Finnish statutes (*saadokset*) published via the
+#' Retrieves the list of Finnish statutes (Finnish: *säädökset*) published
+#' via the
 #' Finlex Open Data REST API (<https://opendata.finlex.fi>), for a given
 #' range of years and statute categories. Only the Finnish-language (`fin`)
 #' version of each statute is returned.

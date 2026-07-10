@@ -29,7 +29,7 @@ statute length.}
 \description{
 Retrieves core bibliographic metadata for one or more Finnish statutes
 from the Finlex Open Data API: the date of issue, the official title,
-and the number of sections (\emph{pykalat}) in the statute text.
+and the number of sections (Finnish: \emph{pykälät}) in the statute text.
 }
 \details{
 This function intentionally returns only raw, directly observed fields.

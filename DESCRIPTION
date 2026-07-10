@@ -1,10 +1,10 @@
 Package: finlex
-Title: Access Open Data from the Finnish Finlex Legislative Database
+Title: Access Open Data from the Finnish 'Finlex' Legislative Database
 Version: 0.0.0.9000
 Authors@R: 
     person("Kristian", "Vepsäläinen", , "kristian.vepsalainen@proton.me", role = c("aut", "cre"))
 Description: Provides functions to retrieve and structure Finnish
-    legislative data made available through the Finlex Open Data API
+    legislative data made available through the 'Finlex' Open Data API
     (<https://opendata.finlex.fi>). Functions cover retrieval of statute
     catalogues, statute titles, structured statute metadata, and
     cross-references between amending and amended statutes, returned as
@@ -12,17 +12,18 @@ Description: Provides functions to retrieve and structure Finnish
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/kristianvepsalainen/finlex
-BugReports: https://github.com/kristianvepsalainen/finlex/issues
+URL: https://github.com/KristianVepsalainen/finlex
+BugReports: https://github.com/KristianVepsalainen/finlex/issues
 Depends: 
     R (>= 4.1.0)
 Imports:
     dplyr,
     httr2,
     tibble,
-    xml2,
     xml2
 Suggests:
+    spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
+Language: en-US
