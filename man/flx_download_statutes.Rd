@@ -37,7 +37,7 @@ Returns a zero-row tibble with the same columns if nothing matches.
 \description{
 Retrieves the list of Finnish statutes (Finnish: \emph{säädökset}) published
 via the
-Finlex Open Data REST API (\url{https://opendata.finlex.fi}), for a given
+Finlex Open Data REST API (\url{https://www.finlex.fi/en/open-data}), for a given
 range of years and statute categories. Only the Finnish-language (\code{fin})
 version of each statute is returned.
 }

@@ -5,12 +5,13 @@ Authors@R:
     person("Kristian", "Vepsäläinen", , "kristian.vepsalainen@proton.me", role = c("aut", "cre"))
 Description: Provides functions to retrieve and structure Finnish
     legislative data made available through the 'Finlex' Open Data API
-    (<https://opendata.finlex.fi>). Functions cover retrieval of statute
-    catalogues, statute titles, structured statute metadata, and
+    (<https://www.finlex.fi/en/open-data>). Functions cover retrieval of
+    statute catalogues, statute titles, structured statute metadata, and
     cross-references between amending and amended statutes, returned as
     tidy tibbles for further analysis.
 License: MIT + file LICENSE
 Encoding: UTF-8
+Language: en-GB
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/KristianVepsalainen/finlex
 BugReports: https://github.com/KristianVepsalainen/finlex/issues
@@ -26,4 +27,3 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
-Language: en-US

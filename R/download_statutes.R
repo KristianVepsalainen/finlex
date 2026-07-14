@@ -2,7 +2,7 @@
 #'
 #' Retrieves the list of Finnish statutes (Finnish: *säädökset*) published
 #' via the
-#' Finlex Open Data REST API (<https://opendata.finlex.fi>), for a given
+#' Finlex Open Data REST API (<https://www.finlex.fi/en/open-data>), for a given
 #' range of years and statute categories. Only the Finnish-language (`fin`)
 #' version of each statute is returned.
 #'
