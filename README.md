@@ -3,9 +3,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-**finlex** is part of the **lexverse** ecosystem (modeled on tidyverse), a
-set of tools for retrieving and analysing open legal data. This package
-retrieves data from the Finnish [Finlex Open Data
+**finlex** provides R functions to retrieve and structure Finnish
+legislative data from the [Finlex Open Data
 API](https://opendata.finlex.fi).
 
 ## Installation
