@@ -3,4 +3,5 @@
 export(flx_download_statutes)
 export(flx_get_affected)
 export(flx_get_metadata)
+export(flx_get_text)
 export(flx_get_title)
