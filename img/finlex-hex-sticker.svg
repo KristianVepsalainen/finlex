@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 390" width="340" height="390">
+  <!-- Hex background -->
+  <polygon points="170,21.8 320,108.4 320,281.6 170,368.2 20,281.6 20,108.4"
+           fill="#ffffff" stroke="#002F6C" stroke-width="10" stroke-linejoin="round"/>
+
+  <!-- Finland silhouette (enlarged slightly, shifted down) and § mark side by side -->
+  <g transform="translate(-22,51.4) scale(0.8)">
+    <!-- Finland silhouette, derived from real border coordinates -->
+    <path d="M185.0,57.6 L184.1,67.5 L193.3,76.9 L187.8,87.6 L194.7,103.7 L190.7,115.8
+             L196.1,126.3 L193.7,135.6 L202.5,145.2 L200.2,152.5 L194.7,160.6 L181.9,178.7
+             L171.0,179.8 L160.5,185.0 L150.8,188.0 L147.3,180.3 L141.6,175.6 L142.9,161.7
+             L140.0,148.9 L142.8,140.7 L148.2,131.8 L161.9,116.5 L165.9,113.5 L165.3,107.5
+             L157.0,100.8 L155.0,95.3 L154.8,73.5 L145.5,63.9 L137.5,57.0 L141.1,53.2
+             L147.7,60.7 L155.5,60.0 L162.0,63.4 L167.7,57.2 L170.6,46.8 L179.9,42.0
+             L187.5,47.6 Z"
+          fill="#002F6C"/>
+
+    <!-- Åland archipelago -->
+    <circle cx="133" cy="184" r="3" fill="#002F6C"/>
+  </g>
+
+  <!-- Section-sign mark, placed next to the map -->
+  <text x="222" y="182" font-family="Georgia, 'Times New Roman', serif" font-size="130"
+        font-weight="bold" fill="#002F6C" text-anchor="middle">&#167;</text>
+
+  <!-- Name banner -->
+  <rect x="45" y="225" width="250" height="55" rx="12" fill="#002F6C"/>
+  <text x="170" y="262" font-family="'Courier New', monospace" font-size="34"
+        font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">finlex</text>
+</svg>
