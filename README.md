@@ -5,7 +5,7 @@
 
 **finlex** provides R functions to retrieve and structure Finnish
 legislative data from the [Finlex Open Data
-API](https://www.finlex.fi/en/open-data).
+API](https://www.finlex.fi/en/open-data). ![finlex logo](img/finlex-hex-sticker.svg)
 
 ## Installation
 
