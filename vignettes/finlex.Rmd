@@ -1,0 +1,144 @@
+---
+title: "Getting started with finlex"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with finlex}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+## Introduction
+
+finlex provides R functions to retrieve and structure Finnish legislative
+data from the [Finlex Open Data API](https://www.finlex.fi/en/open-data).
+This vignette walks through the package's six functions, from finding
+statutes to reading their full text and tracking amendments.
+
+
+``` r
+library(finlex)
+```
+
+## Finding statutes
+
+`flx_download_statutes()` retrieves the catalogue of Finnish statutes for
+a given range of years and statute categories. Categories are
+`"new-statute"`, `"amending-statute"`, and `"repealing-statute"`.
+
+
+``` r
+new_2023 <- flx_download_statutes(
+  start_year = 2023, end_year = 2023,
+  categories = "new-statute", quiet = TRUE
+)
+nrow(new_2023)
+#> [1] 388
+head(new_2023)
+#> # A tibble: 6 × 4
+#>   akn_uri                                                                          year number statute_type
+#>   <chr>                                                                           <int>  <int> <chr>       
+#> 1 https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/act/statute/2023/657/fin@  2023    657 NewStatute  
+#> 2 https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/act/statute/2023/4/fin@    2023      4 NewStatute  
+#> 3 https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/act/statute/2023/1/fin@    2023      1 NewStatute  
+#> 4 https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/act/statute/2023/6/fin@    2023      6 NewStatute  
+#> 5 https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/act/statute/2023/5/fin@    2023      5 NewStatute  
+#> 6 https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/act/statute/2023/9/fin@    2023      9 NewStatute
+```
+
+## Getting a statute's title
+
+Once you have a year and number -- either from
+`flx_download_statutes()` or known in advance -- `flx_get_title()` looks
+up the official title. It is vectorised, so you can pass several
+statutes at once.
+
+
+``` r
+flx_get_title(year = 1992, number = 1535)
+#> # A tibble: 1 × 4
+#>    year number status title       
+#>   <int>  <int> <chr>  <chr>       
+#> 1  1992   1535 ok     Tuloverolaki
+```
+
+## Structured metadata
+
+`flx_get_metadata()` adds the date of issue and the number of sections,
+without any derived classification -- classification is left to the
+user, since it involves methodological choices beyond raw data
+retrieval.
+
+
+``` r
+flx_get_metadata(year = 1992, number = 1535)
+#> # A tibble: 1 × 6
+#>    year number status date_issued title        n_sections
+#>   <int>  <int> <chr>  <date>      <chr>             <int>
+#> 1  1992   1535 ok     1992-12-30  Tuloverolaki        155
+```
+
+## Reading the full text
+
+`flx_get_text()` returns the complete text of a statute, split into one
+row per section (Finnish: *pykälä*).
+
+
+``` r
+sections <- flx_get_text(year = 1992, number = 1535)
+nrow(sections)
+#> [1] 155
+head(sections[, c("section_index", "section_id", "heading")], 5)
+#> # A tibble: 5 × 3
+#>   section_index section_id           heading                              
+#>           <int> <chr>                <chr>                                
+#> 1             1 part_1__chp_1__sec_1 Tulovero ja veronsaajat              
+#> 2             2 part_1__chp_1__sec_2 Tuloverotusta koskevat muut säädökset
+#> 3             3 part_1__chp_2__sec_3 Yhteisö                              
+#> 4             4 part_1__chp_2__sec_4 Yhtymä                               
+#> 5             5 part_1__chp_2__sec_5 Yhteisetuus
+```
+
+## Tracking amendments
+
+Amending and repealing statutes reference the statute(s) they affect.
+`flx_get_affected()` follows those references. Here we take the first
+amending statute from 2023 and look up what it changes:
+
+
+``` r
+amendments <- flx_download_statutes(
+  start_year = 2023, end_year = 2023,
+  categories = "amending-statute", quiet = TRUE
+)
+flx_get_affected(year = amendments$year[1], number = amendments$number[1])
+#> # A tibble: 1 × 6
+#>   source_year source_number status target_href                   target_year target_number
+#>         <int>         <int> <chr>  <chr>                               <int>         <int>
+#> 1        2023             2 ok     /akn/fi/act/statute/2015/1352        2015          1352
+```
+
+## Other Finlex documents
+
+Beyond the Statute Book, Finlex also publishes treaties, government
+proposals, and authority regulations through a separate endpoint.
+`flx_get_doc()` covers these. Some older documents were never digitised
+as machine-readable text and exist only as a scanned PDF -- in that
+case, `status` is `"pdf_only"` and `pdf_url` points to the file instead.
+
+
+``` r
+flx_get_doc(doc_type = "authority-regulation", year = 1996, number = 32082)
+#> # A tibble: 1 × 8
+#>   doc_type              year number status   title                                  date_issued text  pdf_url           
+#>   <chr>                <int> <chr>  <chr>    <chr>                                  <date>      <chr> <chr>             
+#> 1 authority-regulation  1996 32082  pdf_only Kolin kansallispuiston järjestyssääntö 1996-11-18  <NA>  https://opendata.…
+```
+
+## A note on politeness
+
+All functions in finlex pause briefly between requests when called with
+more than one statute, and identify themselves to the Finlex API with a
+descriptive User-Agent. There is no need to add your own delays when
+using the vectorised interface.

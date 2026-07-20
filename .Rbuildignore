@@ -5,3 +5,6 @@
 ^\.github$
 ^CRAN-SUBMISSION$
 ^img$
+^vignettes/finlex\.Rmd\.orig$
+^doc$
+^Meta$
