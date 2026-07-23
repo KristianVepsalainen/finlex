@@ -1,6 +1,6 @@
 # finlex
 
-**[Documentation site](https://kristianvepsalainen.github.io/finlex/)**
+**[Documentation site](https://kristianvepsalainen.com/finlex/)**
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/KristianVepsalainen/finlex/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KristianVepsalainen/finlex/actions/workflows/R-CMD-check.yaml)

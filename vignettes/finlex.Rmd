@@ -13,7 +13,7 @@ vignette: >
 
 finlex provides R functions to retrieve and structure Finnish legislative
 data from the [Finlex Open Data API](https://www.finlex.fi/en/open-data).
-This vignette walks through the package's six functions, from finding
+This vignette walks through the package's functions, from finding
 statutes to reading their full text and tracking amendments.
 
 
@@ -81,8 +81,8 @@ flx_get_metadata(year = 1992, number = 1535)
 
 ## Reading the full text
 
-`flx_get_text()` returns the complete text of a statute, split into one
-row per section (Finnish: *pykälä*).
+`flx_get_text()` returns the complete text of a statute as originally
+enacted, split into one row per section (Finnish: *pykala*).
 
 
 ``` r
@@ -99,6 +99,33 @@ head(sections[, c("section_index", "section_id", "heading")], 5)
 #> 4             4 part_1__chp_2__sec_4 Yhtymä                               
 #> 5             5 part_1__chp_2__sec_5 Yhteisetuus
 ```
+
+## The consolidated (up-to-date) version
+
+Statutes are amended over time. `flx_get_consolidated_text()` returns the
+*consolidated* version -- the text as currently in force, with all
+amendments merged in -- using the same `year`/`number` as the original
+statute, since the consolidated version is a different rendering of the
+same legal work, not a separate document.
+
+
+``` r
+current <- flx_get_consolidated_text(year = 1992, number = 1535)
+nrow(current)
+#> [1] 249
+head(current[, c("section_index", "section_id", "heading")], 5)
+#> # A tibble: 5 × 3
+#>   section_index section_id                    heading                              
+#>           <int> <chr>                         <chr>                                
+#> 1             1 part_1__chp_1__sec_1          Tulovero ja veronsaajat              
+#> 2             2 part_1__chp_1__sec_2          Tuloverotusta koskevat muut säädökset
+#> 3             3 part_1__chp_2__sec_3v20210619 Yhteisö                              
+#> 4             4 part_1__chp_2__sec_4          Yhtymä                               
+#> 5             5 part_1__chp_2__sec_5          Yhteisetuus
+```
+
+Not every statute has a consolidated version available; in that case
+`status` is `"not_found"` rather than an error.
 
 ## Tracking amendments
 
