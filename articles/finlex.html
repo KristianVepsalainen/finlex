@@ -83,8 +83,8 @@
 </h2>
 <p>finlex provides R functions to retrieve and structure Finnish
 legislative data from the <a href="https://www.finlex.fi/en/open-data" class="external-link">Finlex Open Data API</a>. This
-vignette walks through the package’s six functions, from finding
-statutes to reading their full text and tracking amendments.</p>
+vignette walks through the package’s functions, from finding statutes to
+reading their full text and tracking amendments.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KristianVepsalainen/finlex" class="external-link">finlex</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -145,8 +145,9 @@ retrieval.</p>
 <div class="section level2">
 <h2 id="reading-the-full-text">Reading the full text<a class="anchor" aria-label="anchor" href="#reading-the-full-text"></a>
 </h2>
-<p><code><a href="../reference/flx_get_text.html">flx_get_text()</a></code> returns the complete text of a statute,
-split into one row per section (Finnish: <em>pykälä</em>).</p>
+<p><code><a href="../reference/flx_get_text.html">flx_get_text()</a></code> returns the complete text of a statute as
+originally enacted, split into one row per section (Finnish:
+<em>pykala</em>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sections</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/flx_get_text.html">flx_get_text</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1992</span>, number <span class="op">=</span> <span class="fl">1535</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sections</span><span class="op">)</span></span>
@@ -162,12 +163,39 @@ split into one row per section (Finnish: <em>pykälä</em>).</p>
 <span><span class="co">#&gt; 5             5 part_1__chp_2__sec_5 Yhteisetuus</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="the-consolidated-up-to-date-version">The consolidated (up-to-date) version<a class="anchor" aria-label="anchor" href="#the-consolidated-up-to-date-version"></a>
+</h2>
+<p>Statutes are amended over time.
+<code><a href="../reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code> returns the
+<em>consolidated</em> version – the text as currently in force, with all
+amendments merged in – using the same
+<code>year</code>/<code>number</code> as the original statute, since the
+consolidated version is a different rendering of the same legal work,
+not a separate document.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">current</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/flx_get_consolidated_text.html">flx_get_consolidated_text</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1992</span>, number <span class="op">=</span> <span class="fl">1535</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">current</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 249</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">current</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"section_index"</span>, <span class="st">"section_id"</span>, <span class="st">"heading"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 3</span></span>
+<span><span class="co">#&gt;   section_index section_id                    heading                              </span></span>
+<span><span class="co">#&gt;           &lt;int&gt; &lt;chr&gt;                         &lt;chr&gt;                                </span></span>
+<span><span class="co">#&gt; 1             1 part_1__chp_1__sec_1          Tulovero ja veronsaajat              </span></span>
+<span><span class="co">#&gt; 2             2 part_1__chp_1__sec_2          Tuloverotusta koskevat muut säädökset</span></span>
+<span><span class="co">#&gt; 3             3 part_1__chp_2__sec_3v20210619 Yhteisö                              </span></span>
+<span><span class="co">#&gt; 4             4 part_1__chp_2__sec_4          Yhtymä                               </span></span>
+<span><span class="co">#&gt; 5             5 part_1__chp_2__sec_5          Yhteisetuus</span></span></code></pre></div>
+<p>Not every statute has a consolidated version available; in that case
+<code>status</code> is <code>"not_found"</code> rather than an
+error.</p>
+</div>
+<div class="section level2">
 <h2 id="tracking-amendments">Tracking amendments<a class="anchor" aria-label="anchor" href="#tracking-amendments"></a>
 </h2>
 <p>Amending and repealing statutes reference the statute(s) they affect.
 <code><a href="../reference/flx_get_affected.html">flx_get_affected()</a></code> follows those references. Here we take
 the first amending statute from 2023 and look up what it changes:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">amendments</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/flx_download_statutes.html">flx_download_statutes</a></span><span class="op">(</span></span>
 <span>  start_year <span class="op">=</span> <span class="fl">2023</span>, end_year <span class="op">=</span> <span class="fl">2023</span>,</span>
 <span>  categories <span class="op">=</span> <span class="st">"amending-statute"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -187,7 +215,7 @@ proposals, and authority regulations through a separate endpoint.
 digitised as machine-readable text and exist only as a scanned PDF – in
 that case, <code>status</code> is <code>"pdf_only"</code> and
 <code>pdf_url</code> points to the file instead.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/flx_get_doc.html">flx_get_doc</a></span><span class="op">(</span>doc_type <span class="op">=</span> <span class="st">"authority-regulation"</span>, year <span class="op">=</span> <span class="fl">1996</span>, number <span class="op">=</span> <span class="fl">32082</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 8</span></span>
 <span><span class="co">#&gt;   doc_type              year number status   title                                  date_issued text  pdf_url           </span></span>
