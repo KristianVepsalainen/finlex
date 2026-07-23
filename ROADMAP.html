@@ -51,48 +51,50 @@
 
 <div id="roadmap-to-finlex-100" class="section level1">
 
-<p>Status as of 2026-07-20: v0.1.0 on CRAN. Seven functions built (four more than what’s on CRAN): <code><a href="reference/flx_download_statutes.html">flx_download_statutes()</a></code>, <code><a href="reference/flx_get_title.html">flx_get_title()</a></code>, <code><a href="reference/flx_get_metadata.html">flx_get_metadata()</a></code>, <code><a href="reference/flx_get_affected.html">flx_get_affected()</a></code>, <code><a href="reference/flx_get_text.html">flx_get_text()</a></code>, <code><a href="reference/flx_get_doc.html">flx_get_doc()</a></code>, <code><a href="reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code>. Vignette in place.</p>
+<p>Status as of 2026-07-23: v0.1.0 on CRAN, v0.1.0.9000 in development with four additional functions and a pkgdown site. Seven functions built: <code><a href="reference/flx_download_statutes.html">flx_download_statutes()</a></code>, <code><a href="reference/flx_get_title.html">flx_get_title()</a></code>, <code><a href="reference/flx_get_metadata.html">flx_get_metadata()</a></code>, <code><a href="reference/flx_get_affected.html">flx_get_affected()</a></code>, <code><a href="reference/flx_get_text.html">flx_get_text()</a></code>, <code><a href="reference/flx_get_doc.html">flx_get_doc()</a></code>, <code><a href="reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code>. Vignette in place. pkgdown site live via GitHub Actions + GitHub Pages.</p>
 <p>This document tracks what’s left before calling finlex 1.0 – the point at which the public API is considered stable and users can rely on it not changing in breaking ways.</p>
 <div class="section level2">
 <h2 id="a-function-coverage">A. Function coverage<a class="anchor" aria-label="anchor" href="#a-function-coverage"></a></h2>
-<ul class="task-list"><li><label><input type="checkbox" checked><code><a href="reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code> – the <em>ajantasainen</em> (consolidated, always-current) version of a statute, using <code>actDocumentType = "statute-consolidated"</code> with <code>langAndVersion = "fin@latest"</code> (the temporal version must be given explicitly for consolidated text, unlike the original as-enacted text, which resolves fine with plain <code>fin@</code>). Done 2026-07-20.</label></li>
+<ul class="task-list"><li><label><input type="checkbox" checked><code><a href="reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code> – done 2026-07-20.</label></li>
 <li><label><input type="checkbox">Swedish-language support. Finland is officially bilingual; all current functions hardcode <code>fin@</code> in the URL. Add a <code>lang</code> parameter (<code>"fin"</code>/<code>"swe"</code>) across the statute functions. Note: the <code>act</code> endpoint’s <code>actDocumentType</code> enum also includes <code>statute-foreign-language-translation</code> and <code>statute-sami-translation</code> – worth checking whether Swedish falls under <code>langAndVersion = "swe@..."</code> on the regular <code>statute</code> type, or needs its own <code>actDocumentType</code>. Verify via Swagger before coding, as with every other endpoint so far.</label></li>
-<li><label><input type="checkbox"><code>flx_get_judgment()</code> (or a more honestly named variant) for the two document types actually available under <code>/akn/fi/judgment/...</code>: <code>chancellor-of-justice-decision</code> and <code>data-protection-ombudsman-decision</code>. Deliberately deferred earlier – revisit now that scope is clear.</label></li>
+<li><label><input type="checkbox"><code>flx_get_judgment()</code> (or a more honestly named variant) for the two document types actually available under <code>/akn/fi/judgment/...</code>: <code>chancellor-of-justice-decision</code> and <code>data-protection-ombudsman-decision</code>.</label></li>
 <li><label><input type="checkbox"><code>treaty-metadata</code> and <code>legal-literature-references</code> handling (deferred from <code><a href="reference/flx_get_doc.html">flx_get_doc()</a></code> – different structure, need their own investigation before coding).</label></li>
-<li><label><input type="checkbox"><code>flx_classify_statute()</code> – optional derived classification (Act/Decree/Decision-type grouping from title patterns). Deliberately kept separate from raw data retrieval; still on the table as a standalone helper.</label></li>
-<li><label><input type="checkbox">Revisit whether full KKO/KHO case law ever appears on the <code>judgment</code> endpoint – if Finlex expands it, this is the highest-value addition to the package but is out of our control.</label></li>
+<li><label><input type="checkbox"><code>flx_classify_statute()</code> – optional derived classification (Act/Decree/Decision-type grouping from title patterns).</label></li>
+<li><label><input type="checkbox">Revisit whether full KKO/KHO case law ever appears on the <code>judgment</code> endpoint.</label></li>
 </ul></div>
 <div class="section level2">
 <h2 id="b-robustness">B. Robustness<a class="anchor" aria-label="anchor" href="#b-robustness"></a></h2>
-<ul class="task-list"><li><label><input type="checkbox">Input validation: sanity-check year ranges (e.g. reject <code>end_year &lt; start_year</code> consistently across all functions, not just <code><a href="reference/flx_download_statutes.html">flx_download_statutes()</a></code>).</label></li>
-<li><label><input type="checkbox" checked><code>langAndVersion = "fin@latest"</code> is now used (for consolidated text) and confirmed working. Document this pattern explicitly for users who might want <code>"latest"</code> behaviour elsewhere.</label></li>
-<li><label><input type="checkbox">Review error messages for clarity when <code><a href="https://rdrr.io/r/base/match.arg.html" class="external-link">match.arg()</a></code> rejects an invalid <code>doc_type</code>/<code>categories</code> value – default R error text is terse.</label></li>
+<ul class="task-list"><li><label><input type="checkbox">Input validation: sanity-check year ranges consistently across all functions.</label></li>
+<li><label><input type="checkbox" checked><code>langAndVersion = "fin@latest"</code> confirmed working, used in <code><a href="reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code>.</label></li>
+<li><label><input type="checkbox">Review error messages for clarity when <code><a href="https://rdrr.io/r/base/match.arg.html" class="external-link">match.arg()</a></code> rejects an invalid <code>doc_type</code>/<code>categories</code> value.</label></li>
 </ul></div>
 <div class="section level2">
 <h2 id="c-testing">C. Testing<a class="anchor" aria-label="anchor" href="#c-testing"></a></h2>
-<ul class="task-list"><li><label><input type="checkbox">Consider adding <code>httptest2</code> mocks for at least the core functions, so CI doesn’t depend entirely on live network calls (used already in the africalaws project for the same reason: faster, more reliable CI, no risk from Finlex API downtime).</label></li>
-<li><label><input type="checkbox">Expand edge-case coverage: empty result sets, multi-page pagination edge cases in <code><a href="reference/flx_download_statutes.html">flx_download_statutes()</a></code>, statutes with zero sections.</label></li>
-<li><label><input type="checkbox">Add a GitHub Actions <code>R-CMD-check</code> workflow (<code>usethis::use_github_action("check-standard")</code>) for continuous checking on every push – currently only the one-off R-hub workflow exists.</label></li>
+<ul class="task-list"><li><label><input type="checkbox">Consider adding <code>httptest2</code> mocks for at least the core functions.</label></li>
+<li><label><input type="checkbox">Expand edge-case coverage: empty result sets, multi-page pagination edge cases, statutes with zero sections.</label></li>
+<li><label><input type="checkbox">Add a GitHub Actions <code>R-CMD-check</code> workflow (<code>usethis::use_github_action("check-standard")</code>) for continuous checking on every push – still only the one-off R-hub workflow and the pkgdown workflow exist; no check runs automatically on push yet. <strong>Quick win, worth doing soon.</strong></label></li>
 </ul></div>
 <div class="section level2">
 <h2 id="d-documentation--polish">D. Documentation &amp; polish<a class="anchor" aria-label="anchor" href="#d-documentation--polish"></a></h2>
-<ul class="task-list"><li><label><input type="checkbox">pkgdown site (<code>usethis::use_pkgdown()</code> + GitHub Actions deploy). Move the hex logo to <code>man/figures/logo.png</code> so pkgdown picks it up automatically.</label></li>
-<li><label><input type="checkbox">README badges: CRAN status, R-CMD-check, CRAN downloads.</label></li>
-<li><label><input type="checkbox"><code>CITATION</code> file for academic users citing the package.</label></li>
-<li><label><input type="checkbox">Verify and document the Finlex Open Data licence/terms of use explicitly in the README (important for downstream users who need to know their redistribution rights).</label></li>
-<li><label><input type="checkbox">Keep <code>NEWS.md</code> current with every release, not just 0.1.0.</label></li>
+<ul class="task-list"><li><label><input type="checkbox" checked>pkgdown site (<code>usethis::use_pkgdown()</code> + <code>usethis::use_pkgdown_github_pages()</code>). Done 2026-07-23, live via GitHub Actions + GitHub Pages.</label></li>
+<li><label><input type="checkbox">Confirm whether the hex logo was moved to <code>man/figures/logo.png</code> for pkgdown to pick up automatically – follow-up needed, unclear if this step was completed alongside the pkgdown setup.</label></li>
+<li><label><input type="checkbox">README badges: CRAN status, pkgdown, R-CMD-check (once C above is done). <strong>Quick win.</strong></label></li>
+<li><label><input type="checkbox"><code>CITATION</code> file for academic users citing the package (<code>usethis::use_citation()</code>). <strong>Quick win.</strong></label></li>
+<li><label><input type="checkbox">Verify and document the Finlex Open Data licence/terms of use explicitly in the README.</label></li>
+<li><label><input type="checkbox">Keep <code>NEWS.md</code> current with every <em>user-facing</em> release – routine infra changes (CI, pkgdown setup) don’t need their own NEWS entries, only new functions, bug fixes, and breaking changes do.</label></li>
 <li><label><input type="checkbox">Add the new functions (<code><a href="reference/flx_get_doc.html">flx_get_doc()</a></code>, <code><a href="reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code>, etc.) to the vignette, or add a second vignette covering the non-statute document types.</label></li>
 </ul></div>
 <div class="section level2">
 <h2 id="e-process">E. Process<a class="anchor" aria-label="anchor" href="#e-process"></a></h2>
 <ul class="task-list"><li><label><input type="checkbox" checked>Get v0.1.0 through CRAN review – done, package is live on CRAN.</label></li>
 <li><label><input type="checkbox">Submit accumulated new functions (A + B above) as v0.2.0.</label></li>
-<li><label><input type="checkbox">Gather real-world feedback for at least one release cycle before committing to 1.0 – breaking changes are much cheaper before 1.0 than after.</label></li>
-<li><label><input type="checkbox">Once API feels settled and documented: bump to 1.0.0, tag release, announce (e.g. R-bloggers, relevant Finnish open-data/legal-tech communities – good fit with the lexverse credibility-building goal).</label></li>
+<li><label><input type="checkbox">Gather real-world feedback for at least one release cycle before committing to 1.0.</label></li>
+<li><label><input type="checkbox">Once API feels settled and documented: bump to 1.0.0, tag release, announce.</label></li>
 </ul></div>
 <div class="section level2">
-<h2 id="suggested-next-concrete-step">Suggested next concrete step<a class="anchor" aria-label="anchor" href="#suggested-next-concrete-step"></a></h2>
-<p>Swedish-language support (A) is a good next candidate – but check the Swagger enum for the exact mechanism (separate <code>actDocumentType</code> vs. <code>langAndVersion = "swe@..."</code>) before writing any code, the same lesson learned from <code>statute-consolidated</code>.</p>
+<h2 id="suggested-next-concrete-steps-small-and-quick">Suggested next concrete steps (small and quick)<a class="anchor" aria-label="anchor" href="#suggested-next-concrete-steps-small-and-quick"></a></h2>
+<p>Three low-effort items ready to knock out in any order: 1. <code>R-CMD-check</code> GitHub Actions workflow (C) – safety net for all future changes. 2. <code>CITATION</code> file (D) – one command, <code>usethis::use_citation()</code>. 3. README badges (D) – cosmetic but makes the repo look CRAN-ready at a glance; do after (1) so the R-CMD-check badge has something to link to.</p>
+<p>Bigger items (Swedish support, judgment endpoint) still need a Swagger check before coding, per the lesson learned with <code><a href="reference/flx_get_consolidated_text.html">flx_get_consolidated_text()</a></code>.</p>
 </div>
 </div>
 
