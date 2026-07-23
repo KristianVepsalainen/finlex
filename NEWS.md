@@ -1,4 +1,4 @@
-# finlex (development version)
+# finlex 0.2.0
 
 * `flx_get_text()`: get the full text of a statute, split into one row
   per section.
