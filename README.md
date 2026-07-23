@@ -1,6 +1,10 @@
 # finlex
 
+**[Documentation site](https://kristianvepsalainen.github.io/finlex/)**
+
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/KristianVepsalainen/finlex/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KristianVepsalainen/finlex/actions/workflows/R-CMD-check.yaml)
+[![CRAN status](https://www.r-pkg.org/badges/version/finlex)](https://CRAN.R-project.org/package=finlex)
 <!-- badges: end -->
 
 **finlex** provides R functions to retrieve and structure Finnish

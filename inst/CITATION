@@ -1,0 +1,9 @@
+bibentry(
+  bibtype = "Manual",
+  title   = "finlex: Access Open Data from the Finnish 'Finlex' Legislative Database",
+  author  = person("Kristian", "Veps\u00e4l\u00e4inen",
+                    email = "kristian.vepsalainen@proton.me"),
+  year    = "2026",
+  note    = "R package version 0.1.0",
+  url     = "https://CRAN.R-project.org/package=finlex"
+)
