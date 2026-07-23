@@ -1,6 +1,6 @@
 Package: finlex
 Title: Access Open Data from the Finnish 'Finlex' Legislative Database
-Version: 0.1.0
+Version: 0.1.9000
 Authors@R: 
     person("Kristian", "Vepsäläinen", , "kristian.vepsalainen@proton.me", role = c("aut", "cre"))
 Description: Provides functions to retrieve and structure Finnish
