@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/KristianVepsalainen/finlex
+URL: https://github.com/KristianVepsalainen/finlex, http://kristianvepsalainen.com/finlex/
 BugReports: https://github.com/KristianVepsalainen/finlex/issues
 Depends: 
     R (>= 4.1.0)
@@ -26,7 +26,8 @@ Suggests:
     knitr,
     rmarkdown,
     spelling,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    pkgdown
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
 VignetteBuilder: knitr
